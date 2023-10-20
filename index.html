@@ -65,16 +65,25 @@
             cursor: pointer;
         }
 
+        /* Position the 3D button as an icon in the top right corner of the product image */
         .toggle-3d-button {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: #007BFF;
-            color: white;
+            top: 370px;
+            right: 48%;
+            width: 40px; /* Set the width and height for the button */
+            height: 40px;
+            background-image: url('3d-model.png'); /* Replace with your 3D icon image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: transparent; /* Remove background color */
             border: none;
-            border-radius: 4px;
-            padding: 10px 20px;
             cursor: pointer;
+        }
+
+        .toggle-3d-button:hover {
+            /* You can add styles for the button when hovered over */
+            /* For example, you can change the opacity */
+            opacity: 0.8;
         }
 
         .close-3d-button {
@@ -92,33 +101,55 @@
         }
 
         /* Add media query for mobile view */
-@media (max-width: 768px) {
-    .close-3d-button {
-        display: block; /* Display the button in mobile view */
+        @media (max-width: 768px) {
+            .toggle-3d-button {
+                display: block; /* Display the button in mobile view */
+            }
+
+            .close-3d-button {
+                display: none; /* Hide the close button in mobile view by default */
+            }
+        }
+
+        .product-image {
+            width: 400px;
+            height: 400px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .product-viewer {
+            width: 400px;
+            height: 400px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .close-3d-button:hover {
+            background-color: red !important;
+        }
+
+        .toggle-3d-button {
+    /* Other button styles */
+    animation: wiggle 3s infinite;
+}
+
+@keyframes wiggle {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-5deg);
+    }
+    75% {
+        transform: rotate(5deg);
     }
 }
 
-.product-image {
-    width: 400px;
-    height: 400px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-}
-
-.product-viewer {
-    width: 400px;
-    height: 400px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-}
-
-.close-3d-button:hover {
-            background-color: red !important;
-        }
     </style>
 </head>
 <body>
     <div class="product-container">
         <!-- Use Material-UI Button components -->
-        <button class="toggle-3d-button" onclick="toggle3DView()" style="background-color: #2196F3; color: white;">3D</button>
+        <button class="toggle-3d-button" onclick="toggle3DView()"></button>
         <button class="close-3d-button" onclick="close3DView()" style="background-color: #2196F3; color: white;">Close 3D</button>
         <img class="product-image" src="poster.png" alt="Product Image">
         <div class="product-viewer-container">
@@ -146,13 +177,13 @@
                 productImageView.style.display = 'block';
                 productViewerContainer.style.display = 'none';
                 close3DButton.style.display = 'none';
-                toggle3DButton.innerText = "3D";
+                toggle3DButton.style.display = 'block';
                 is3DViewOpen = false;
             } else {
                 productImageView.style.display = 'none';
                 productViewerContainer.style.display = 'block';
                 close3DButton.style.display = 'none';
-                toggle3DButton.innerText = "Loading...";
+                toggle3DButton.style.display = 'none';
                 startLoadingAnimation();
                 if (modelViewer) {
                     // Remove the existing model-viewer element
@@ -171,7 +202,6 @@
                 modelViewer.addEventListener('load', () => {
                     close3DButton.style.display = 'block';
                     stopLoadingAnimation();
-                    toggle3DButton.innerText = "Close 3D";
                     is3DViewOpen = true;
                 });
             }
@@ -181,7 +211,7 @@
             productImageView.style.display = 'block';
             productViewerContainer.style.display = 'none';
             stopLoadingAnimation();
-            toggle3DButton.innerText = "3D";
+            toggle3DButton.style.display = 'block';
             close3DButton.style.display = 'none';
             is3DViewOpen = false;
         }
