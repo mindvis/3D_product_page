@@ -98,21 +98,28 @@
     }
 }
 
-        .product-image {
-            width: 400px;
-            height: 400px;
-        }
+.product-image {
+    width: 400px;
+    height: 400px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
 
-        .product-viewer {
-            width: 400px;
-            height: 400px;
+.product-viewer {
+    width: 400px;
+    height: 400px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.close-3d-button:hover {
+            background-color: red !important;
         }
     </style>
 </head>
 <body>
     <div class="product-container">
-        <button class="toggle-3d-button" onclick="toggle3DView()">3D</button>
-        <button class="close-3d-button" onclick="close3DView()">Close 3D</button>
+        <!-- Use Material-UI Button components -->
+        <button class="toggle-3d-button" onclick="toggle3DView()" style="background-color: #2196F3; color: white;">3D</button>
+        <button class="close-3d-button" onclick="close3DView()" style="background-color: #2196F3; color: white;">Close 3D</button>
         <img class="product-image" src="poster.png" alt="Product Image">
         <div class="product-viewer-container">
             <div class="loading-bar"></div>
