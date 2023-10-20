@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    <title>Product Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .product-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+        }
+
+        .product-viewer-container {
+            display: none;
+            position: relative;
+        }
+
+        .loading-bar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 10px;
+            background-color: #007BFF;
+            animation: loading 6s linear infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                width: 10px;
+            }
+            50% {
+                width: 100px;
+            }
+            100% {
+                width: 10px;
+            }
+        }
+
+        .description {
+            max-width: 400px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .add-to-cart {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .toggle-3d-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .close-3d-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: none; /* Initially hidden */
+        }
+
+        .product-image {
+            width: 400px;
+            height: 400px;
+        }
+
+        .product-viewer {
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="product-container">
+        <button class="toggle-3d-button" onclick="toggle3DView()">3D</button>
+        <button class="close-3d-button" onclick="close3DView()">Close 3D</button>
+        <img class="product-image" src="poster.png" alt="Product Image">
+        <div class="product-viewer-container">
+            <div class="loading-bar"></div>
+        </div>
+        <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque purus ac ex pharetra, eu efficitur lectus dictum.</p>
+        <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+    </div>
+
+    <script>
+        const productImageView = document.querySelector('.product-image');
+        const productViewerContainer = document.querySelector('.product-viewer-container');
+        const loadingBar = document.querySelector('.loading-bar');
+        const toggle3DButton = document.querySelector('.toggle-3d-button');
+        const close3DButton = document.querySelector('.close-3d-button');
+        let is3DViewOpen = false;
+        let modelViewer = null;
+
+        // Ensure that the 3D viewer is initially hidden
+        productViewerContainer.style.display = 'none';
+        close3DButton.style.display = 'none';
+
+        function toggle3DView() {
+            if (is3DViewOpen) {
+                productImageView.style.display = 'block';
+                productViewerContainer.style.display = 'none';
+                close3DButton.style.display = 'none';
+                toggle3DButton.innerText = "3D";
+                is3DViewOpen = false;
+            } else {
+                productImageView.style.display = 'none';
+                productViewerContainer.style.display = 'block';
+                close3DButton.style.display = 'none';
+                toggle3DButton.innerText = "Loading...";
+                startLoadingAnimation();
+                if (modelViewer) {
+                    // Remove the existing model-viewer element
+                    productViewerContainer.removeChild(modelViewer);
+                }
+                // Create a new model-viewer element
+                modelViewer = document.createElement('model-viewer');
+                modelViewer.setAttribute('id', 'product-viewer');
+                modelViewer.setAttribute('src', 'Men_Sierra_Low_Ankle_Shoe1.glb');
+                modelViewer.setAttribute('alt', 'Product 3D Model');
+                modelViewer.setAttribute('camera-controls', true);
+                modelViewer.setAttribute('auto-rotate', true);
+                modelViewer.setAttribute('shadow-intensity', '0.5');
+                modelViewer.setAttribute('class', 'product-viewer');
+                productViewerContainer.appendChild(modelViewer);
+                modelViewer.addEventListener('load', () => {
+                    close3DButton.style.display = 'block';
+                    stopLoadingAnimation();
+                    toggle3DButton.innerText = "Close 3D";
+                    is3DViewOpen = true;
+                });
+            }
+        }
+
+        function close3DView() {
+            productImageView.style.display = 'block';
+            productViewerContainer.style.display = 'none';
+            stopLoadingAnimation();
+            toggle3DButton.innerText = "3D";
+            close3DButton.style.display = 'none';
+            is3DViewOpen = false;
+        }
+
+        function startLoadingAnimation() {
+            loadingBar.style.display = 'block';
+        }
+
+        function stopLoadingAnimation() {
+            loadingBar.style.display = 'none';
+        }
+
+        function addToCart() {
+            // Implement your add to cart logic here
+            alert('Product added to cart!');
+        }
+    </script>
+</body>
+</html>
