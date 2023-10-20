@@ -89,15 +89,23 @@
         .close-3d-button {
             position: absolute;
             top: 20px;
-            right: 20px;
-            background-color: #007BFF;
-            color: white;
+            right: 30px;
+            width: 20px;
+            height: 20px;
+            background-image: url('close.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: transparent;
             border: none;
-            border-radius: 4px;
-            padding: 10px 20px;
             cursor: pointer;
             display: none; /* Initially hidden */
             z-index: 1;
+        }
+
+        .close-3d-button:hover {
+            /* You can add styles for the button when hovered over */
+            /* For example, you can change the opacity */
+            opacity: 0.8;
         }
 
         /* Add media query for mobile view */
@@ -123,9 +131,6 @@
             box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
         }
 
-        .close-3d-button:hover {
-            background-color: red !important;
-        }
 
         .toggle-3d-button {
     /* Other button styles */
@@ -150,7 +155,7 @@
     <div class="product-container">
         <!-- Use Material-UI Button components -->
         <button class="toggle-3d-button" onclick="toggle3DView()"></button>
-        <button class="close-3d-button" onclick="close3DView()" style="background-color: #2196F3; color: white;">Close 3D</button>
+        <button class="close-3d-button" onclick="close3DView()"></button>
         <img class="product-image" src="poster.png" alt="Product Image">
         <div class="product-viewer-container">
             <div class="loading-bar"></div>
