@@ -88,7 +88,15 @@
             padding: 10px 20px;
             cursor: pointer;
             display: none; /* Initially hidden */
+            z-index: 1;
         }
+
+        /* Add media query for mobile view */
+@media (max-width: 768px) {
+    .close-3d-button {
+        display: block; /* Display the button in mobile view */
+    }
+}
 
         .product-image {
             width: 400px;
